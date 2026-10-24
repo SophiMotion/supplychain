@@ -2,8 +2,9 @@ import { defineConfig, devices } from '@playwright/test'
 
 export default defineConfig({
   testDir: './tests/e2e',
-  timeout: 30000,
-  expect: { timeout: 10000 },
+  timeout: process.env.PLAYWRIGHT_BASE_URL ? 180000 : 30000,
+  // Public hosting may be slower than the local fixture, especially on a cold CDN.
+  expect: { timeout: process.env.PLAYWRIGHT_BASE_URL ? 60000 : 10000 },
   workers: 1,
   reporter: 'list',
   use: {
